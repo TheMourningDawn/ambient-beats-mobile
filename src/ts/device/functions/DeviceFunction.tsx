@@ -10,9 +10,6 @@ export function DeviceFunction({id, functions, accessToken}: any) {
   const [functionReturnCode, setFunctionReturnCode] = useState<number>();
 
   function runFunctionWithInput() {
-    console.info(
-      `POST https://api.particle.io/v1/devices/${id}/${selectedFunction}?access_token=${accessToken}&arg="${functionInputValue}"`,
-    );
     var formData = new URLSearchParams();
     formData.append('access_token', accessToken);
     formData.append('args', functionInputValue);
@@ -26,11 +23,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       body: formData.toString(),
     })
       .then((response) => {
-        const json: any = response.json();
-        console.info(
-          `Function Response - status ${response.status} - json: ${json}`,
-        );
-        return json;
+        return response.json();
       })
       .then((json) => {
         const functionResponse: FunctionResult = json as FunctionResult;
@@ -61,6 +54,8 @@ export function DeviceFunction({id, functions, accessToken}: any) {
     controlsContainer: {
       flex: 3,
       flexDirection: 'column',
+      marginRight: 8,
+      marginLeft: 8
     },
     buttonContainer: {
       flex: 1,
@@ -79,7 +74,6 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       flex: 3,
       color: '#FFFFFF',
       fontSize: 20,
-      marginLeft: 10,
     },
     valueText: {
       flex: 1,
@@ -129,7 +123,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
                 })}
               </Picker>
             ) : (
-              <Text style={{marginLeft: 16}}>No functions available</Text>
+              <Text style={{marginLeft: 4}}>No functions available</Text>
             )}
             <View style={style.valueText}>
               <Text

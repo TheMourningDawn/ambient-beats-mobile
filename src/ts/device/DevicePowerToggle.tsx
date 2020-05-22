@@ -69,11 +69,6 @@ export const usePowerState = (
   }, []);
 
   function setPowerState(state: boolean) {
-    console.info(
-      `POST https://api.particle.io/v1/devices/${deviceId}/power?access_token=${accessToken}&arg="${
-        state ? Power.ON : Power.OFF
-      }"`,
-    );
     var formData = new URLSearchParams();
     formData.append('access_token', accessToken);
     formData.append('args', state ? Power.ON : Power.OFF);
@@ -87,9 +82,7 @@ export const usePowerState = (
       body: formData.toString(),
     })
       .then((response) => {
-        console.log('SetPowerStateStatus: ' + response.status);
-        const json: any = response.json();
-        return json;
+        return response.json();
       })
       .then((json) => {
         const functionResponse: FunctionResult = json as FunctionResult;
@@ -103,9 +96,6 @@ export const usePowerState = (
   }
 
   const getPowerState = () => {
-    console.info(
-      `GET https://api.particle.io/v1/devices/${deviceId}/powered-on?access_token=${accessToken}`,
-    );
     fetch(
       `https://api.particle.io/v1/devices/${deviceId}/powered-on?access_token=${accessToken}`,
       {
@@ -116,13 +106,7 @@ export const usePowerState = (
       },
     )
       .then((response) => {
-        const json: Object = response.json();
-        console.info(
-          `getPowerState Response - status ${
-            response.status
-          } - json: ${JSON.stringify(json)}`,
-        );
-        return json;
+        return response.json();
       })
       .then((json) => {
         const jsonString = JSON.stringify(json, (key, value) => {

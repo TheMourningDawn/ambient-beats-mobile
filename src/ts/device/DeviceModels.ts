@@ -4,6 +4,7 @@ export interface DeviceInfo {
   variables: {[key: number]: string};
   reformattedVariables: Variable[];
   functions: Array<any>;
+  connected: boolean;
 }
 
 export interface Variable {

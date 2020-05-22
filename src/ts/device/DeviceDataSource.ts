@@ -44,7 +44,6 @@ export const useDeviceInfo = () => {
         },
       )
         .then((response) => {
-          console.info('DevicesStatusCode: ' + response.status);
           return response.json();
         })
         .then((json) => {
@@ -71,7 +70,6 @@ export const useDeviceInfo = () => {
         },
       )
         .then((response) => {
-          console.info('DevicesInfoStatusCode: ' + response.status);
           return response.json();
         })
         .then((json) => {

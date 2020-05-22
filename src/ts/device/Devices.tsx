@@ -5,6 +5,7 @@ import {DeviceInfo} from './DeviceModels';
 import {DevicePowerToggle} from './DevicePowerToggle';
 import {DeviceFunction} from './functions/DeviceFunction';
 import {DeviceVariable} from './variables/DeviceVariable';
+import { AnimationControls } from './AnimationControls';
 
 export function Devices() {
   const [{deviceInfo, isError, currentUser}] = useDeviceInfo();
@@ -54,6 +55,7 @@ export function Devices() {
             </View>
           </View>
           <View style={userCardStyle.bodyContainer}>
+            <AnimationControls id={device.id} accessToken={currentUser?.accessToken}/>
             <DeviceVariable
               reformattedVariables={device.reformattedVariables}
               id={device.id}
@@ -73,7 +75,9 @@ export function Devices() {
   return (
     <View style={{padding: 10}}>
       <FlatList
-        data={deviceInfo}
+        data={deviceInfo.filter((item) => {
+            return !!item && item.connected;
+        })}
         ListEmptyComponent={
           <View>
             <Text>Nothing to see here</Text>
