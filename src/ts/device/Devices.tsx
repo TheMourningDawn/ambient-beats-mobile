@@ -1,9 +1,10 @@
 import React from 'react';
-import { FlatList, StyleSheet, Switch, Text, View } from 'react-native';
-import { DeviceInfo } from './Device';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useDeviceInfo } from './DeviceDataSource';
-import { DeviceFunction } from './DeviceFunction';
-import { DeviceVariable } from './DeviceVariable';
+import { DeviceInfo } from './DeviceModels';
+import { DevicePowerToggle } from './DevicePowerToggle';
+import { DeviceFunction } from './functions/DeviceFunction';
+import { DeviceVariable } from './variables/DeviceVariable';
 
 export function Devices() {
   const [{deviceInfo, isError, currentUser}] = useDeviceInfo();
@@ -46,23 +47,29 @@ export function Devices() {
   });
 
   function deviceCard(device: DeviceInfo) {
-    // console.log(device)
     return (
       <>
         <View style={userCardStyle.container}>
           <View style={userCardStyle.headerContainer}>
             <Text style={userCardStyle.title}>{device?.name}</Text>
-            <Switch
-              style={userCardStyle.switch}
-              trackColor={{false: '#767577', true: '#bfc0c0'}}
-              thumbColor={true ? '#ef8354' : '#2d3142'}
-              onValueChange={() => {}}
-              value={true}
-            />
+            <View style={userCardStyle.switch}>
+              <DevicePowerToggle
+                id={device?.id}
+                accessToken={currentUser?.accessToken}
+              />
+            </View>
           </View>
           <View style={userCardStyle.bodyContainer}>
-            <DeviceVariable reformattedVariables={device.reformattedVariables} id={device.id} accessToken={currentUser?.accessToken}/>
-            <DeviceFunction functions={device.functions} id={device.id} accessToken={currentUser?.accessToken}/>
+            <DeviceVariable
+              reformattedVariables={device.reformattedVariables}
+              id={device.id}
+              accessToken={currentUser?.accessToken}
+            />
+            <DeviceFunction
+              functions={device.functions}
+              id={device.id}
+              accessToken={currentUser?.accessToken}
+            />
           </View>
         </View>
       </>

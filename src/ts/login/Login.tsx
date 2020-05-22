@@ -23,12 +23,10 @@ export default function Login({navigation}: any) {
       body: formData.toString(),
     })
     .then((response) => {
-        // console.info("StatusCode: " + response.status)
         return response.json()
     })
 
     .then((json) => {
-    //   console.info("Getting Token")
       getUserInfo(json.access_token);
     })
     .catch((error) => {
@@ -40,12 +38,10 @@ export default function Login({navigation}: any) {
     fetch(`https://api.particle.io/v1/user?access_token=${accessToken}`)
       .then((response) => response.json())
       .then((json) => {
-        // console.info("getUserInfo: " + json)
         userStore.setUser({
             accessToken: accessToken,
             username: json.username
         })
-        // console.info("Getting User Info")
         navigation.navigate('Home')
       })
       .catch((error) => {

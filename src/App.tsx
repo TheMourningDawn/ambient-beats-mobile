@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions= {{headerShown: false}}>
         {!user || !user?.accessToken ? (
           <>
           <Stack.Screen
@@ -45,7 +45,8 @@ export default function App() {
           <Stack.Screen 
           name="Home" 
           component={Home}
-          options={{title: `Hello, ${user?.username}`}} />
+          options={{title: `Hello, ${user?.username}`}}
+           />
           </>
         )}
       </Stack.Navigator>

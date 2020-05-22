@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {Picker, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
-import {FunctionResult} from './Device';
+import {FunctionResult} from '../DeviceModels';
+import {Picker} from '@react-native-community/picker';
 
 export function DeviceFunction({id, functions, accessToken}: any) {
   const [selectedFunction, setSelectedFunction] = useState<string>('hue');
@@ -27,7 +28,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       .then((response) => {
         const json: any = response.json()
         console.info(
-          `Response - status ${response.status} - json: ${json}`,
+          `Function Response - status ${response.status} - json: ${json}`,
         );
         return json;
       })
@@ -119,7 +120,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
               <Picker
                 selectedValue={selectedFunction}
                 style={style.picker}
-                onValueChange={(itemValue) => setSelectedFunction(itemValue)}>
+                onValueChange={(itemValue) => setSelectedFunction(itemValue.toString())}>
                 {functions.map((item: string, index: string) => {
                   return <Picker.Item label={item} value={item} key={index} />;
                 })}

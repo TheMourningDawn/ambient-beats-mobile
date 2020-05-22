@@ -1,14 +1,17 @@
+import { Picker } from '@react-native-community/picker';
 import React, { useState } from 'react';
-import { Picker, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { VariableResult } from './Device';
+import { Variable, VariableResult } from '../DeviceModels';
 
 export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
   const [selectedValue, setSelectedValue] = useState('hue');
   const [variableValue, setVariableValue] = useState('123%');
 
   function getVariableValue() {
-      console.info(`https://api.particle.io/v1/devices/${id}/${selectedValue}?access_token=${accessToken}`)
+    console.info(
+      `https://api.particle.io/v1/devices/${id}/${selectedValue}?access_token=${accessToken}`,
+    );
     fetch(
       `https://api.particle.io/v1/devices/${id}/${selectedValue}?access_token=${accessToken}`,
       {
@@ -23,19 +26,20 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
         return response.json();
       })
       .then((json) => {
-        console.info(json)
         const jsonString = JSON.stringify(json, (key, value) => {
-            if (typeof value === "boolean"||typeof value === "number") {
-                return String(value);
-              }
-              return value;
-        })
+          if (typeof value === 'boolean' || typeof value === 'number') {
+            return String(value);
+          }
+          return value;
+        });
 
-        const variableResult: VariableResult = JSON.parse(jsonString) as VariableResult;
-        setVariableValue(variableResult.result)
-        console.info(json);
-      }).catch((error) => {
-        console.error(error)
+        const variableResult: VariableResult = JSON.parse(
+          jsonString,
+        ) as VariableResult;
+        setVariableValue(variableResult.result);
+      })
+      .catch((error) => {
+        console.error(error);
       });
   }
 
@@ -91,9 +95,11 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
         <Picker
           selectedValue={selectedValue}
           style={style.picker}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
-          {reformattedVariables.map((item, index) => {
-            return <Picker.Item label={item.name} value={item.name} key={index} />;
+          onValueChange={(itemValue) => setSelectedValue(itemValue.toString())}>
+          {reformattedVariables.map((item: Variable, index: string) => {
+            return (
+              <Picker.Item label={item.name} value={item.name} key={index} />
+            );
           })}
         </Picker>
         <View style={style.valueText}>
@@ -101,7 +107,11 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
             {variableValue}
           </Text>
         </View>
-        <TouchableOpacity style={style.button} onPress={() => {getVariableValue()}}>
+        <TouchableOpacity
+          style={style.button}
+          onPress={() => {
+            getVariableValue();
+          }}>
           <Text style={{fontSize: 16, color: '#FFFFFF', textAlign: 'center'}}>
             REFRESH
           </Text>

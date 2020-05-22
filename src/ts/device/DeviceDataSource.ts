@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { UserModel } from '../user/UserModel';
 import userStore from '../user/UserStore';
-import { Device, DeviceInfo, Variable } from './Device';
+import { Device, DeviceInfo, Variable } from './DeviceModels';
 
 export const useDeviceInfo = () => {
   const [devices, setDevices] = useState<Array<Device>>([]);
