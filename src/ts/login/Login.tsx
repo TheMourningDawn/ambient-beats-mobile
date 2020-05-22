@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import React, {useState} from 'react';
+import {Button, Text, TextInput, View} from 'react-native';
 import userStore from '../user/UserStore';
 
 export default function Login({navigation}: any) {
@@ -8,11 +8,11 @@ export default function Login({navigation}: any) {
 
   function getToken() {
     var formData = new URLSearchParams();
-    formData.append('grant_type', 'password')
-    formData.append('username', username)
-    formData.append('password', password)
-    formData.append('client_id', 'particle')
-    formData.append('client_secret', 'particlevi')
+    formData.append('grant_type', 'password');
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('client_id', 'particle');
+    formData.append('client_secret', 'particlevi');
 
     fetch('https://api.particle.io/oauth/token', {
       method: 'POST',
@@ -22,16 +22,16 @@ export default function Login({navigation}: any) {
       },
       body: formData.toString(),
     })
-    .then((response) => {
-        return response.json()
-    })
+      .then((response) => {
+        return response.json();
+      })
 
-    .then((json) => {
-      getUserInfo(json.access_token);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then((json) => {
+        getUserInfo(json.access_token);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   function getUserInfo(accessToken: String) {
@@ -39,15 +39,15 @@ export default function Login({navigation}: any) {
       .then((response) => response.json())
       .then((json) => {
         userStore.setUser({
-            accessToken: accessToken,
-            username: json.username
-        })
-        navigation.navigate('Home')
+          accessToken: accessToken,
+          username: json.username,
+        });
+        navigation.navigate('Home');
       })
       .catch((error) => {
         console.error(error);
       });
-  }  
+  }
 
   return (
     <View style={{padding: 10}}>
@@ -65,9 +65,7 @@ export default function Login({navigation}: any) {
         defaultValue={password}
         secureTextEntry={true}
       />
-      <Button
-        title="LOG IN"
-        onPress={() => getToken()}></Button>
+      <Button title="LOG IN" onPress={() => getToken()}></Button>
     </View>
   );
 }

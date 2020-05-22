@@ -1,5 +1,4 @@
 export interface UserModel {
-    accessToken?: String
-    username?: String
+  accessToken?: String;
+  username?: String;
 }
-  

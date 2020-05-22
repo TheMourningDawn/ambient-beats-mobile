@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Switch, View } from 'react-native';
-import { FunctionResult, VariableResult } from './DeviceModels';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Switch, View} from 'react-native';
+import {FunctionResult, VariableResult} from './DeviceModels';
 
 export namespace Power {
-  export const ON: string = "ON";
-  export const OFF: string = "OFF";
+  export const ON: string = 'ON';
+  export const OFF: string = 'OFF';
 }
 
 export function DevicePowerToggle({id, accessToken}: any) {
-  const [{poweredOn, isError, isLoading}, setPowerState ] = usePowerState(id, accessToken);
+  const [{poweredOn, isError, isLoading}, setPowerState] = usePowerState(
+    id,
+    accessToken,
+  );
 
   const style = StyleSheet.create({
     container: {
@@ -17,10 +20,10 @@ export function DevicePowerToggle({id, accessToken}: any) {
       alignContent: 'center',
     },
     switch: {
-        flex: 1,
-        marginRight: 12,
-        marginTop: 12,
-      },
+      flex: 1,
+      marginRight: 12,
+      marginTop: 12,
+    },
   });
 
   return (
@@ -30,7 +33,7 @@ export function DevicePowerToggle({id, accessToken}: any) {
         trackColor={{false: '#767577', true: '#bfc0c0'}}
         thumbColor={true ? '#ef8354' : '#2d3142'}
         onValueChange={(value) => {
-          setPowerState(value)
+          setPowerState(value);
         }}
         value={poweredOn}
       />
@@ -38,7 +41,10 @@ export function DevicePowerToggle({id, accessToken}: any) {
   );
 }
 
-export const usePowerState = (deviceId: string, accessToken: string): [any, CallableFunction] => {
+export const usePowerState = (
+  deviceId: string,
+  accessToken: string,
+): [any, CallableFunction] => {
   const [poweredOn, setPoweredOn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -62,7 +68,9 @@ export const usePowerState = (deviceId: string, accessToken: string): [any, Call
 
   function setPowerState(state: boolean) {
     console.info(
-      `POST https://api.particle.io/v1/devices/${deviceId}/power?access_token=${accessToken}&arg="${state ? Power.ON : Power.OFF}"`,
+      `POST https://api.particle.io/v1/devices/${deviceId}/power?access_token=${accessToken}&arg="${
+        state ? Power.ON : Power.OFF
+      }"`,
     );
     var formData = new URLSearchParams();
     formData.append('access_token', accessToken);
@@ -77,14 +85,14 @@ export const usePowerState = (deviceId: string, accessToken: string): [any, Call
       body: formData.toString(),
     })
       .then((response) => {
-        console.log("SetPowerStateStatus: " + response.status)
+        console.log('SetPowerStateStatus: ' + response.status);
         const json: any = response.json();
         return json;
       })
       .then((json) => {
         const functionResponse: FunctionResult = json as FunctionResult;
         if (functionResponse.return_value > 0) {
-            setPoweredOn(state);
+          setPoweredOn(state);
         }
       })
       .catch((error) => {
@@ -107,7 +115,11 @@ export const usePowerState = (deviceId: string, accessToken: string): [any, Call
     )
       .then((response) => {
         const json: Object = response.json();
-        console.info(`getPowerState Response - status ${response.status} - json: ${JSON.stringify(json)}`);
+        console.info(
+          `getPowerState Response - status ${
+            response.status
+          } - json: ${JSON.stringify(json)}`,
+        );
         return json;
       })
       .then((json) => {
@@ -130,4 +142,3 @@ export const usePowerState = (deviceId: string, accessToken: string): [any, Call
 
   return [{poweredOn, isError, isLoading}, setPowerState];
 };
-

@@ -1,9 +1,9 @@
 export interface DeviceInfo {
-    id: string;
-    name: string;
-    variables: {[key: number]: string};
-    reformattedVariables: Variable[];
-    functions: Array<any>;
+  id: string;
+  name: string;
+  variables: {[key: number]: string};
+  reformattedVariables: Variable[];
+  functions: Array<any>;
 }
 
 export interface Variable {
@@ -16,9 +16,9 @@ export interface VariableResult {
   result: string;
   coreInfo: {
     name: string;
-    deviceId: string,
-    connected: boolean,
-  }
+    deviceId: string;
+    connected: boolean;
+  };
 }
 
 export interface FunctionResult {

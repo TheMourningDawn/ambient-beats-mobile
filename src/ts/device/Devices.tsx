@@ -1,10 +1,10 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { useDeviceInfo } from './DeviceDataSource';
-import { DeviceInfo } from './DeviceModels';
-import { DevicePowerToggle } from './DevicePowerToggle';
-import { DeviceFunction } from './functions/DeviceFunction';
-import { DeviceVariable } from './variables/DeviceVariable';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {useDeviceInfo} from './DeviceDataSource';
+import {DeviceInfo} from './DeviceModels';
+import {DevicePowerToggle} from './DevicePowerToggle';
+import {DeviceFunction} from './functions/DeviceFunction';
+import {DeviceVariable} from './variables/DeviceVariable';
 
 export function Devices() {
   const [{deviceInfo, isError, currentUser}] = useDeviceInfo();
