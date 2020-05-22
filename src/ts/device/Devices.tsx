@@ -12,13 +12,13 @@ export function Devices() {
   const userCardStyle = StyleSheet.create({
     container: {
       display: 'flex',
-      justifyContent: 'flex-start',
       flex: 1,
       flexDirection: 'column',
+      justifyContent: 'space-between',
       backgroundColor: '#2d3142',
-      paddingBottom: 50,
+      padding: 12,
       marginBottom: 12,
-      borderRadius: 20,
+      borderRadius: 10,
     },
     headerContainer: {
       flex: 1,
@@ -28,22 +28,16 @@ export function Devices() {
     bodyContainer: {
       flex: 1,
       flexDirection: 'column',
-      paddingLeft: 12,
-      paddingRight: 12,
+      justifyContent: 'space-between',
     },
     title: {
       flex: 1,
-      marginLeft: 16,
-      marginTop: 12,
+      marginLeft: 4,
       fontWeight: 'bold',
-      fontSize: 24,
+      fontSize: 26,
       color: '#FFFFFF',
     },
-    switch: {
-      flex: 1,
-      marginRight: 12,
-      marginTop: 12,
-    },
+    
   });
 
   function deviceCard(device: DeviceInfo) {
@@ -52,7 +46,7 @@ export function Devices() {
         <View style={userCardStyle.container}>
           <View style={userCardStyle.headerContainer}>
             <Text style={userCardStyle.title}>{device?.name}</Text>
-            <View style={userCardStyle.switch}>
+            <View>
               <DevicePowerToggle
                 id={device?.id}
                 accessToken={currentUser?.accessToken}

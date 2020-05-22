@@ -48,7 +48,6 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
       flex: 1,
       flexDirection: 'column',
       alignContent: 'center',
-      marginBottom: 20,
     },
     titleText: {
       flex: 1,
@@ -61,7 +60,7 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: '#4F5D75',
-      borderRadius: 20,
+      borderRadius: 10,
     },
     picker: {
       flex: 3,
@@ -77,7 +76,7 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
     },
     button: {
       flex: 1,
-      width: 100,
+      width: 90,
       height: 25,
       backgroundColor: '#EF8354',
       borderRadius: 10,

@@ -21,8 +21,6 @@ export function DevicePowerToggle({id, accessToken}: any) {
     },
     switch: {
       flex: 1,
-      marginRight: 12,
-      marginTop: 12,
     },
   });
 
@@ -50,12 +48,15 @@ export const usePowerState = (
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    let mounted = true;
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
 
       try {
-        getPowerState();
+        if (mounted) {
+          getPowerState();
+        }
       } catch (error) {
         setIsError(true);
       }
@@ -64,6 +65,7 @@ export const usePowerState = (
     };
 
     fetchData();
+    mounted = false;
   }, []);
 
   function setPowerState(state: boolean) {

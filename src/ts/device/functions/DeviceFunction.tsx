@@ -45,8 +45,6 @@ export function DeviceFunction({id, functions, accessToken}: any) {
     container: {
       flex: 1,
       flexDirection: 'column',
-      alignContent: 'center',
-      marginBottom: 20,
     },
     titleText: {
       flex: 1,
@@ -58,7 +56,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       flex: 1,
       flexDirection: 'row',
       backgroundColor: '#4F5D75',
-      borderRadius: 20,
+      borderRadius: 10,
     },
     controlsContainer: {
       flex: 3,
@@ -67,15 +65,18 @@ export function DeviceFunction({id, functions, accessToken}: any) {
     buttonContainer: {
       flex: 1,
       flexDirection: 'row',
+      flexGrow: 1,
+      flexShrink: 1,
+      flexBasis: 'auto',
+      justifyContent: 'flex-end',
     },
     selectorContainer: {
       flex: 1,
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     picker: {
       flex: 3,
-      width: 30,
       color: '#FFFFFF',
       fontSize: 20,
       marginLeft: 10,
@@ -88,23 +89,23 @@ export function DeviceFunction({id, functions, accessToken}: any) {
     functionInputContainer: {
       flex: 1,
       flexDirection: 'column',
-      alignItems: 'center',
     },
     textInput: {
       backgroundColor: '#BFC0C0',
       borderRadius: 10,
-      width: '90%',
-      marginRight: 10,
-      marginLeft: 10,
+      width: '100%',
     },
     button: {
       flex: 1,
-      width: 100,
-      height: '100%',
+      flexGrow: 1,
+      flexShrink: 1,
+      flexBasis: 'auto',
+      width: 90,
       backgroundColor: '#EF8354',
       borderRadius: 10,
       alignContent: 'center',
       justifyContent: 'center',
+      alignSelf: 'flex-end'
     },
   });
 
@@ -128,7 +129,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
                 })}
               </Picker>
             ) : (
-              <Text>No functions available</Text>
+              <Text style={{marginLeft: 16}}>No functions available</Text>
             )}
             <View style={style.valueText}>
               <Text
