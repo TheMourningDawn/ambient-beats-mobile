@@ -13,7 +13,6 @@ export class UserStore {
   }
 
   async setUser(user: UserModel): Promise<void> {
-    console.log('Setting user');
     var item = await AsyncStorage.setItem(`@user`, JSON.stringify(user));
 
     return item;

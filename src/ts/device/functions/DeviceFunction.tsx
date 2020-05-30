@@ -1,37 +1,20 @@
-import {Picker} from '@react-native-community/picker';
-import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
-import {FunctionResult} from '../DeviceModels';
+import { Picker } from '@react-native-community/picker';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { useParticleAPI } from '../../../ParticleAPI';
+import { FunctionResult } from '../DeviceModels';
 
 export function DeviceFunction({id, functions, accessToken}: any) {
   const [selectedFunction, setSelectedFunction] = useState<string>('hue');
   const [functionInputValue, setFunctionInputValue] = useState<string>('');
   const [functionReturnCode, setFunctionReturnCode] = useState<number>();
+  const [{functionResult, isLoading, isError}, functionRequest] = useParticleAPI(id, accessToken)
 
   function runFunctionWithInput() {
-    var formData = new URLSearchParams();
-    formData.append('access_token', accessToken);
-    formData.append('args', functionInputValue);
-
-    fetch(`https://api.particle.io/v1/devices/${id}/${selectedFunction}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString(),
+    functionRequest(selectedFunction, functionInputValue).then((result: FunctionResult) => {
+      setFunctionReturnCode(result.return_value)
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const functionResponse: FunctionResult = json as FunctionResult;
-        setFunctionReturnCode(functionResponse.return_value);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   }
 
   const style = StyleSheet.create({
@@ -55,7 +38,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       flex: 3,
       flexDirection: 'column',
       marginRight: 8,
-      marginLeft: 8
+      marginLeft: 8,
     },
     buttonContainer: {
       flex: 1,
@@ -68,7 +51,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
     selectorContainer: {
       flex: 1,
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     picker: {
       flex: 3,
@@ -99,7 +82,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       borderRadius: 10,
       alignContent: 'center',
       justifyContent: 'center',
-      alignSelf: 'flex-end'
+      alignSelf: 'flex-end',
     },
   });
 

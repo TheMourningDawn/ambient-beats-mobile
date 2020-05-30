@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
-import {FunctionResult, VariableResult} from './DeviceModels';
+import {FunctionResult, VariableResult} from '../DeviceModels';
 
 export namespace Power {
   export const ON: string = 'ON';
@@ -18,10 +18,10 @@ export function AnimationControls({id, accessToken}: any) {
     container: {
       flex: 1,
       flexDirection: 'row-reverse',
-      margin: 20
+      margin: 20,
     },
     textContainer: {
-        flex: 1,
+      flex: 1,
     },
     animationIndexText: {
       flex: 1,
@@ -39,30 +39,30 @@ export function AnimationControls({id, accessToken}: any) {
   });
 
   return (
-      <>
-    <View style={style.container}>
-      <TouchableOpacity
-        style={style.button}
-        onPress={() => {
-          nextAnimation();
-        }}>
-        <Text style={{fontSize: 16, color: '#FFFFFF', textAlign: 'center'}}>
-          NEXT
-        </Text>
-      </TouchableOpacity>
-      <View style={style.textContainer}>
-        <Text style={style.animationIndexText}>{currentAnimationIndex}</Text>
+    <>
+      <View style={style.container}>
+        <TouchableOpacity
+          style={style.button}
+          onPress={() => {
+            nextAnimation();
+          }}>
+          <Text style={{fontSize: 16, color: '#FFFFFF', textAlign: 'center'}}>
+            NEXT
+          </Text>
+        </TouchableOpacity>
+        <View style={style.textContainer}>
+          <Text style={style.animationIndexText}>{currentAnimationIndex}</Text>
+        </View>
+        <TouchableOpacity
+          style={style.button}
+          onPress={() => {
+            previousAnimation();
+          }}>
+          <Text style={{fontSize: 16, color: '#FFFFFF', textAlign: 'center'}}>
+            LAST
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={style.button}
-        onPress={() => {
-          previousAnimation();
-        }}>
-        <Text style={{fontSize: 16, color: '#FFFFFF', textAlign: 'center'}}>
-          LAST
-        </Text>
-      </TouchableOpacity>
-    </View>
     </>
   );
 }

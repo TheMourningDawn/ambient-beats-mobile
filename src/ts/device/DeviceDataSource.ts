@@ -47,7 +47,7 @@ export const useDeviceInfo = () => {
           return response.json();
         })
         .then((json) => {
-          const deviceResults = json.map((device: any) => {
+          const deviceResults: Device[] = json.map((device: any) => {
             let mappedDevice: Device = device as Device;
             getDeviceInformation(user, mappedDevice.id);
             return mappedDevice;

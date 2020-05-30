@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Switch, View} from 'react-native';
-import {FunctionResult, VariableResult} from './DeviceModels';
+import {FunctionResult, VariableResult} from '../DeviceModels';
 
 export namespace Power {
   export const ON: string = 'ON';

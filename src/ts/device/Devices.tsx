@@ -2,10 +2,11 @@ import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useDeviceInfo} from './DeviceDataSource';
 import {DeviceInfo} from './DeviceModels';
-import {DevicePowerToggle} from './DevicePowerToggle';
+import {DevicePowerToggle} from './controls/DevicePowerToggle';
 import {DeviceFunction} from './functions/DeviceFunction';
 import {DeviceVariable} from './variables/DeviceVariable';
-import { AnimationControls } from './AnimationControls';
+import { AnimationControls } from './controls/AnimationControls';
+import { DeviceColorPicker } from './controls/ColorPicker';
 
 export function Devices() {
   const [{deviceInfo, isError, currentUser}] = useDeviceInfo();
@@ -56,6 +57,7 @@ export function Devices() {
           </View>
           <View style={userCardStyle.bodyContainer}>
             <AnimationControls id={device.id} accessToken={currentUser?.accessToken}/>
+            <DeviceColorPicker id={device.id} accessToken={currentUser?.accessToken}></DeviceColorPicker>
             <DeviceVariable
               reformattedVariables={device.reformattedVariables}
               id={device.id}
@@ -77,7 +79,7 @@ export function Devices() {
       <FlatList
         data={deviceInfo.filter((item) => {
             return !!item && item.connected;
-        })}
+        }).sort((a, b) => a.name.localeCompare(b.name))}
         ListEmptyComponent={
           <View>
             <Text>Nothing to see here</Text>
