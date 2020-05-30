@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {FunctionResult, VariableResult} from '../DeviceModels';
+import { useParticleAPI } from '../../../ParticleAPI';
 
 export namespace Power {
   export const ON: string = 'ON';
@@ -76,6 +77,7 @@ export const useAnimationControls = (
   );
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [{}, functionRequest, variableRequest] = useParticleAPI(deviceId, accessToken)
 
   useEffect(() => {
     let mounted = true;
@@ -99,84 +101,21 @@ export const useAnimationControls = (
   }, []);
 
   const getCurrentAnimation = () => {
-    fetch(
-      `https://api.particle.io/v1/devices/${deviceId}/animation?access_token=${accessToken}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const jsonString = JSON.stringify(json, (key, value) => {
-          if (typeof value === 'boolean' || typeof value === 'number') {
-            return String(value);
-          }
-          return value;
-        });
-
-        const variableResult: VariableResult = JSON.parse(
-          jsonString,
-        ) as VariableResult;
-        setCurrentAnimationIndex(variableResult.result);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    variableRequest("animation").then((result: VariableResult) => {
+      setCurrentAnimationIndex(result.result);
+    });
   };
 
   function nextAnimation() {
-    var formData = new URLSearchParams();
-    formData.append('access_token', accessToken);
-    formData.append('args', 'NEXT');
-
-    fetch(`https://api.particle.io/v1/devices/${deviceId}/change-animation`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString(),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const functionResponse: FunctionResult = json as FunctionResult;
-        setCurrentAnimationIndex(`${functionResponse.return_value}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    functionRequest("power", "NEXT").then((result: FunctionResult) => {
+      setCurrentAnimationIndex(result.return_value.toString());
+    });
   }
 
   function previousAnimation() {
-    var formData = new URLSearchParams();
-    formData.append('access_token', accessToken);
-    formData.append('args', 'PREVIOUS');
-
-    fetch(`https://api.particle.io/v1/devices/${deviceId}/change-animation`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString(),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const functionResponse: FunctionResult = json as FunctionResult;
-        setCurrentAnimationIndex(`${functionResponse.return_value}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    functionRequest("power", "PREVIOUS").then((result: FunctionResult) => {
+      setCurrentAnimationIndex(result.return_value.toString());
+    });
   }
 
   return [

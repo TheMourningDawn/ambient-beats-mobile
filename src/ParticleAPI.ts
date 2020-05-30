@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { FunctionResult } from './ts/device/DeviceModels';
-import { UserModel } from 'src/ts/user/UserModel';
+import { FunctionResult, VariableResult } from './ts/device/DeviceModels';
 
-export const useParticleAPI = (deviceId: string, accessToken: string): [any, CallableFunction] => {
-  const [functionResult, setFunctionResult] = useState<FunctionResult>();
+export const useParticleAPI = (deviceId: string, accessToken: string): [any, CallableFunction, CallableFunction] => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -41,5 +39,42 @@ export const useParticleAPI = (deviceId: string, accessToken: string): [any, Cal
       });
   }
 
-  return [{functionResult, isLoading, isError}, functionRequest];
+  function variableRequest(variableName: string) {
+    console.info(
+      `https://api.particle.io/v1/devices/${deviceId}/${variableName}?access_token=${accessToken}`,
+    );
+    return fetch(
+      `https://api.particle.io/v1/devices/${deviceId}/${variableName}?access_token=${accessToken}`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    )
+      .then((response) => {
+        console.log(response.status)
+        return response.json();
+      })
+      .then((json) => {
+        const jsonString = JSON.stringify(json, (key, value) => {
+          if (typeof value === 'boolean' || typeof value === 'number') {
+            return String(value);
+          }
+          return value;
+        });
+
+        const variableResult: VariableResult = JSON.parse(
+          jsonString,
+        ) as VariableResult;
+
+        console.log(variableResult)
+        return variableResult
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  return [{isLoading, isError}, functionRequest, variableRequest];
 };

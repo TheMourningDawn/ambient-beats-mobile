@@ -3,44 +3,18 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Variable, VariableResult} from '../DeviceModels';
+import { useParticleAPI } from '../../../ParticleAPI';
 
 export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
-  const [selectedValue, setSelectedValue] = useState('hue');
-  const [variableValue, setVariableValue] = useState('123%');
+  const [selectedValue, setSelectedValue] = useState<string>('hue');
+  const [variableValue, setVariableValue] = useState<string>('123%');
+
+  const [{isLoading, isError}, functionRequest, variableRequest] = useParticleAPI(id, accessToken)
 
   function getVariableValue() {
-    console.info(
-      `https://api.particle.io/v1/devices/${id}/${selectedValue}?access_token=${accessToken}`,
-    );
-    fetch(
-      `https://api.particle.io/v1/devices/${id}/${selectedValue}?access_token=${accessToken}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    )
-      .then((response) => {
-        console.info('GettingVarStatusCode: ' + response.status);
-        return response.json();
-      })
-      .then((json) => {
-        const jsonString = JSON.stringify(json, (key, value) => {
-          if (typeof value === 'boolean' || typeof value === 'number') {
-            return String(value);
-          }
-          return value;
-        });
-
-        const variableResult: VariableResult = JSON.parse(
-          jsonString,
-        ) as VariableResult;
-        setVariableValue(variableResult.result);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    variableRequest(selectedValue).then((result: VariableResult) => {
+      setVariableValue(result.result)
+    });
   }
 
   const style = StyleSheet.create({

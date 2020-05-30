@@ -14,8 +14,6 @@ export function DeviceColorPicker({id, accessToken}: any) {
     container: {
       flex: 1,
       marginBottom: 12,
-      //   flexDirection: 'column',
-      //   alignContent: 'center',
     },
     titleText: {
       flex: 1,
@@ -77,7 +75,7 @@ export const userColorState = (
   const [saturation, setInternalSaturation] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [{functionResult}, functionRequest] = useParticleAPI(deviceId, accessToken)
+  const [{}, functionRequest, variableRequest] = useParticleAPI(deviceId, accessToken)
 
   useEffect(() => {
     let mounted = true;
@@ -103,33 +101,8 @@ export const userColorState = (
   }, []);
 
   const getHue = () => {
-    fetch(
-      `https://api.particle.io/v1/devices/${deviceId}/hue?access_token=${accessToken}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const jsonString = JSON.stringify(json, (key, value) => {
-          if (typeof value === 'boolean' || typeof value === 'number') {
-            return String(value);
-          }
-          return value;
-        });
-
-        const variableResult: VariableResult = JSON.parse(
-          jsonString,
-        ) as VariableResult;
-        setInternalHue(parseInt(variableResult.result));
-      })
-      .catch((error) => {
-        console.error(error);
+      variableRequest("hue").then((result: VariableResult) => {
+        setInternalHue(parseInt(result.result))
       });
   };
 
@@ -140,34 +113,9 @@ export const userColorState = (
   }
 
   const getBrightness = () => {
-    fetch(
-      `https://api.particle.io/v1/devices/${deviceId}/brightness?access_token=${accessToken}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const jsonString = JSON.stringify(json, (key, value) => {
-          if (typeof value === 'boolean' || typeof value === 'number') {
-            return String(value);
-          }
-          return value;
-        });
-
-        const variableResult: VariableResult = JSON.parse(
-          jsonString,
-        ) as VariableResult;
-        setInternalBrightness(parseInt(variableResult.result));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    variableRequest("brightness").then((result: VariableResult) => {
+      setInternalBrightness(parseInt(result.result))
+    });
   };
 
   function setBrightness(brightness: number) {
@@ -177,34 +125,9 @@ export const userColorState = (
   }
 
   const getSaturation = () => {
-    fetch(
-      `https://api.particle.io/v1/devices/${deviceId}/saturation?access_token=${accessToken}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const jsonString = JSON.stringify(json, (key, value) => {
-          if (typeof value === 'boolean' || typeof value === 'number') {
-            return String(value);
-          }
-          return value;
-        });
-
-        const variableResult: VariableResult = JSON.parse(
-          jsonString,
-        ) as VariableResult;
-        setInternalSaturation(parseInt(variableResult.result));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    variableRequest("saturation").then((result: VariableResult) => {
+      setInternalSaturation(parseInt(result.result))
+    });
   };
 
   function setSaturation(saturation: number) {

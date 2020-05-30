@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Switch, View} from 'react-native';
 import {FunctionResult, VariableResult} from '../DeviceModels';
+import { useParticleAPI } from '../../../ParticleAPI';
 
 export namespace Power {
   export const ON: string = 'ON';
@@ -46,6 +47,7 @@ export const usePowerState = (
   const [poweredOn, setPoweredOn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [{}, functionRequest, variableRequest] = useParticleAPI(deviceId, accessToken)
 
   useEffect(() => {
     let mounted = true;
@@ -69,61 +71,17 @@ export const usePowerState = (
   }, []);
 
   function setPowerState(state: boolean) {
-    var formData = new URLSearchParams();
-    formData.append('access_token', accessToken);
-    formData.append('args', state ? Power.ON : Power.OFF);
-
-    fetch(`https://api.particle.io/v1/devices/${deviceId}/power`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString(),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const functionResponse: FunctionResult = json as FunctionResult;
-        if (functionResponse.return_value > 0) {
-          setPoweredOn(state);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    functionRequest("power", state ? Power.ON : Power.OFF).then((result: FunctionResult) => {
+      if (result.return_value > 0) {
+        setPoweredOn(state);
+      }
+    });
   }
 
   const getPowerState = () => {
-    fetch(
-      `https://api.particle.io/v1/devices/${deviceId}/powered-on?access_token=${accessToken}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        const jsonString = JSON.stringify(json, (key, value) => {
-          if (typeof value === 'boolean' || typeof value === 'number') {
-            return String(value);
-          }
-          return value;
-        });
-
-        const variableResult: VariableResult = JSON.parse(
-          jsonString,
-        ) as VariableResult;
-        setPoweredOn(variableResult.result == 'true');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    variableRequest("powered-on").then((result: VariableResult) => {
+      setPoweredOn(result.result == 'true');
+    });
   };
 
   return [{poweredOn, isError, isLoading}, setPowerState];

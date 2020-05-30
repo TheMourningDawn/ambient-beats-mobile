@@ -9,12 +9,12 @@ export function DeviceFunction({id, functions, accessToken}: any) {
   const [selectedFunction, setSelectedFunction] = useState<string>('hue');
   const [functionInputValue, setFunctionInputValue] = useState<string>('');
   const [functionReturnCode, setFunctionReturnCode] = useState<number>();
-  const [{functionResult, isLoading, isError}, functionRequest] = useParticleAPI(id, accessToken)
+  const [{isLoading, isError}, functionRequest] = useParticleAPI(id, accessToken)
 
   function runFunctionWithInput() {
     functionRequest(selectedFunction, functionInputValue).then((result: FunctionResult) => {
       setFunctionReturnCode(result.return_value)
-    })
+    });
   }
 
   const style = StyleSheet.create({
