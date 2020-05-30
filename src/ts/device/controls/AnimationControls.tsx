@@ -107,13 +107,13 @@ export const useAnimationControls = (
   };
 
   function nextAnimation() {
-    functionRequest("power", "NEXT").then((result: FunctionResult) => {
+    functionRequest("change-animation", "NEXT").then((result: FunctionResult) => {
       setCurrentAnimationIndex(result.return_value.toString());
     });
   }
 
   function previousAnimation() {
-    functionRequest("power", "PREVIOUS").then((result: FunctionResult) => {
+    functionRequest("change-animation", "PREVIOUS").then((result: FunctionResult) => {
       setCurrentAnimationIndex(result.return_value.toString());
     });
   }
