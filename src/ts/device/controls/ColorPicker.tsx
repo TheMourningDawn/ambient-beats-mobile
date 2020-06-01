@@ -13,7 +13,6 @@ export function DeviceColorPicker({id, accessToken}: any) {
   const style = StyleSheet.create({
     container: {
       flex: 1,
-      marginBottom: 12,
     },
     titleText: {
       flex: 1,
@@ -21,7 +20,7 @@ export function DeviceColorPicker({id, accessToken}: any) {
       color: '#FFFFFF',
       marginLeft: 4,
     },
-    hueSlider: {
+    slider: {
       flex: 1,
       padding: 8
     }
@@ -31,7 +30,7 @@ export function DeviceColorPicker({id, accessToken}: any) {
     <View style={style.container}>
       <Text style={style.titleText}>{"Hue: " + hue?.toString()}</Text>
       <Slider
-        style={style.hueSlider}
+        style={style.slider}
         value={hue}
         minimumValue={0}
         maximumValue={255}
@@ -42,7 +41,7 @@ export function DeviceColorPicker({id, accessToken}: any) {
         }}/>
       <Text style={style.titleText}>{"Brightness: " + brightness.toString()}</Text>
       <Slider
-        style={style.hueSlider}
+        style={style.slider}
         value={brightness}
         minimumValue={0}
         maximumValue={255}
@@ -53,7 +52,7 @@ export function DeviceColorPicker({id, accessToken}: any) {
         }}/>
       <Text style={style.titleText}>{"Saturation: " + saturation.toString()}</Text>
       <Slider
-        style={style.hueSlider}
+        style={style.slider}
         value={saturation}
         minimumValue={0}
         maximumValue={255}
@@ -132,7 +131,7 @@ export const userColorState = (
 
   function setSaturation(saturation: number) {
     functionRequest("set-saturation", saturation?.toString()).then((result: FunctionResult) => {
-      setInternalHue(result.return_value)
+      setInternalSaturation(result.return_value)
     })
   }
 

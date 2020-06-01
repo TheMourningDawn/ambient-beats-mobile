@@ -21,6 +21,8 @@ export function DeviceFunction({id, functions, accessToken}: any) {
     container: {
       flex: 1,
       flexDirection: 'column',
+      paddingTop: 12,
+      paddingBottom: 12,
     },
     titleText: {
       flex: 1,
