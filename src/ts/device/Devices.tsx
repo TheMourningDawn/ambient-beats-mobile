@@ -10,6 +10,7 @@ import {DeviceFunction} from './functions/DeviceFunction';
 import {DeviceVariable} from './variables/DeviceVariable';
 import {AudioReactiveToggle} from './controls/AudioReactiveToggle';
 import {ResetButton} from './controls/ResetButton';
+import {SafeModeButton} from './controls/SafeModeButton';
 
 export function Devices() {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -111,12 +112,16 @@ export function Devices() {
                 id={device.id}
                 accessToken={currentUser?.accessToken}
               />
-              <View>
+              <View style={{paddingBottom: 10}}>
                 <ResetButton
                   id={device.id}
                   accessToken={currentUser?.accessToken}
                 />
               </View>
+              <SafeModeButton
+                id={device.id}
+                accessToken={currentUser?.accessToken}
+              />
             </View>
           )}
           <View

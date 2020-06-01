@@ -3,7 +3,6 @@ import {UserModel} from './UserModel';
 
 export class UserStore {
   async getUser(): Promise<UserModel> {
-    console.info('Getting user');
     return await AsyncStorage.getItem(`@user`).then((json) => {
       if (!!json) {
         const userModel: any = JSON.parse(json) as UserModel;

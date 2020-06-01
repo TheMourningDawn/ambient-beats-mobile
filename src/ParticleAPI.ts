@@ -40,9 +40,6 @@ export const useParticleAPI = (deviceId: string, accessToken: string): [any, Cal
   }
 
   function variableRequest(variableName: string) {
-    console.info(
-      `https://api.particle.io/v1/devices/${deviceId}/${variableName}?access_token=${accessToken}`,
-    );
     return fetch(
       `https://api.particle.io/v1/devices/${deviceId}/${variableName}?access_token=${accessToken}`,
       {
@@ -53,7 +50,6 @@ export const useParticleAPI = (deviceId: string, accessToken: string): [any, Cal
       },
     )
       .then((response) => {
-        console.log(response.status)
         return response.json();
       })
       .then((json) => {
@@ -68,7 +64,6 @@ export const useParticleAPI = (deviceId: string, accessToken: string): [any, Cal
           jsonString,
         ) as VariableResult;
 
-        console.log(variableResult)
         return variableResult
       })
       .catch((error) => {

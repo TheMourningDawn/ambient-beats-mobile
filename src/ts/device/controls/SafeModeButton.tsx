@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useParticleAPI } from '../../../ParticleAPI';
 
-export function ResetButton({id, accessToken}: any) {
+export function SafeModeButton({id, accessToken}: any) {
   const [{}, functionRequest, variableRequest] = useParticleAPI(
     id,
     accessToken,
@@ -34,10 +34,10 @@ export function ResetButton({id, accessToken}: any) {
       <TouchableOpacity
         style={style.button}
         onPress={() => {
-            functionRequest('reset-device', '');
+            functionRequest('enter-safe-mode', '');
         }}>
         <Text style={{fontSize: 16, color: '#FFFFFF', textAlign: 'center'}}>
-          RESET
+          SAFE MODE
         </Text>
       </TouchableOpacity>
     </View>

@@ -75,7 +75,7 @@ export const useAudioReactiveState = (
   }, []);
 
   function setAudioReactiveState(state: boolean) {
-    functionRequest('toggle-audio-reactive', "").then(
+    functionRequest('toggle-audio-reactive', '').then(
       (result: FunctionResult) => {
         setAudioReactiveOn(!!result.return_value);
       },
@@ -84,7 +84,7 @@ export const useAudioReactiveState = (
 
   const getAudioReactiveState = () => {
     variableRequest('audio-on').then((result: VariableResult) => {
-      setAudioReactiveOn(!!result.result);
+      setAudioReactiveOn(result.result == 'true');
     });
   };
 
