@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {useDeviceInfo} from './DeviceDataSource';
-import {DeviceInfo} from './DeviceModels';
-import {DevicePowerToggle} from './controls/DevicePowerToggle';
-import {DeviceFunction} from './functions/DeviceFunction';
-import {DeviceVariable} from './variables/DeviceVariable';
-import {AnimationControls} from './controls/AnimationControls';
-import {DeviceColorPicker} from './controls/ColorPicker';
+import React, { useState } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { AnimationControls } from './controls/AnimationControls';
+import { DeviceColorPicker } from './controls/ColorPicker';
+import { DevicePowerToggle } from './controls/DevicePowerToggle';
+import { useDeviceInfo } from './DeviceDataSource';
+import { DeviceInfo } from './DeviceModels';
+import { DeviceFunction } from './functions/DeviceFunction';
+import { DeviceVariable } from './variables/DeviceVariable';
+import { AudioReactiveToggle } from './controls/AudioReactiveToggle';
 
 export function Devices() {
-  const [expanded, setExpanded] = useState<boolean>();
+  const [expanded, setExpanded] = useState<boolean>(false);
   const [{deviceInfo, isError, currentUser}] = useDeviceInfo();
 
   const style = StyleSheet.create({
@@ -84,6 +85,9 @@ export function Devices() {
               id={device.id}
               accessToken={currentUser?.accessToken}
             />
+            <AudioReactiveToggle
+              id={device.id}
+              accessToken={currentUser?.accessToken}/>
           </View>
           {!!expanded && (
             <View
