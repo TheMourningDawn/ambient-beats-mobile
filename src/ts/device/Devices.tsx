@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { AnimationControls } from './controls/AnimationControls';
-import { DeviceColorPicker } from './controls/ColorPicker';
-import { DevicePowerToggle } from './controls/DevicePowerToggle';
-import { useDeviceInfo } from './DeviceDataSource';
-import { DeviceInfo } from './DeviceModels';
-import { DeviceFunction } from './functions/DeviceFunction';
-import { DeviceVariable } from './variables/DeviceVariable';
-import { AudioReactiveToggle } from './controls/AudioReactiveToggle';
+import {AnimationControls} from './controls/AnimationControls';
+import {DeviceColorPicker} from './controls/ColorPicker';
+import {DevicePowerToggle} from './controls/DevicePowerToggle';
+import {useDeviceInfo} from './DeviceDataSource';
+import {DeviceInfo} from './DeviceModels';
+import {DeviceFunction} from './functions/DeviceFunction';
+import {DeviceVariable} from './variables/DeviceVariable';
+import {AudioReactiveToggle} from './controls/AudioReactiveToggle';
+import {ResetButton} from './controls/ResetButton';
 
 export function Devices() {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -87,7 +88,8 @@ export function Devices() {
             />
             <AudioReactiveToggle
               id={device.id}
-              accessToken={currentUser?.accessToken}/>
+              accessToken={currentUser?.accessToken}
+            />
           </View>
           {!!expanded && (
             <View
@@ -109,6 +111,12 @@ export function Devices() {
                 id={device.id}
                 accessToken={currentUser?.accessToken}
               />
+              <View>
+                <ResetButton
+                  id={device.id}
+                  accessToken={currentUser?.accessToken}
+                />
+              </View>
             </View>
           )}
           <View
