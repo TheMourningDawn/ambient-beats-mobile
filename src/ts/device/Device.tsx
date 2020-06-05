@@ -11,6 +11,7 @@ import {ResetButton} from './controls/ResetButton';
 import {SafeModeButton} from './controls/SafeModeButton';
 import {DeviceFunction} from './functions/DeviceFunction';
 import {DeviceVariable} from './variables/DeviceVariable';
+import {DeviceSectionSeparator} from './DeviceSectionSeparator';
 
 export const deviceStyle = StyleSheet.create({
   container: {
@@ -25,19 +26,13 @@ export const deviceStyle = StyleSheet.create({
   headerContainer: {
     flex: 1,
     flexDirection: 'row',
-    padding: 12,
+    paddingRight: 12,
+    paddingLeft: 12,
+    paddingTop: 12,
   },
-  controlsContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    padding: 12,
-  },
-  advancedContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    padding: 12,
+  sectionContainer: {
+    paddingRight: 12,
+    paddingLeft: 12,
   },
   title: {
     flex: 1,
@@ -83,79 +78,58 @@ export function Device({device, accessToken}: any) {
             <DevicePowerToggle id={device?.id} accessToken={accessToken} />
           </View>
         </View>
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: StyleSheet.hairlineWidth,
-          }}
-        />
         {isAnimatedDevice && (
-          <View style={deviceStyle.controlsContainer}>
-            <AnimationControls id={device.id} accessToken={accessToken} />
-            <View
-              style={{
-                borderBottomColor: 'black',
-                borderBottomWidth: StyleSheet.hairlineWidth,
-              }}
-            />
-            <DeviceColorPicker id={device.id} accessToken={accessToken} />
-            <View
-              style={{
-                borderBottomColor: 'black',
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                marginTop: 12,
-                marginBottom: 12,
-              }}
-            />
-            <AnimationSpeed id={device.id} accessToken={accessToken} />
-            <View
-              style={{
-                borderBottomColor: 'black',
-                borderBottomWidth: StyleSheet.hairlineWidth,
-              }}
-            />
-            <AudioReactiveToggle id={device.id} accessToken={accessToken} />
-            <View
-              style={{
-                borderBottomColor: 'black',
-                borderBottomWidth: StyleSheet.hairlineWidth,
-              }}
-            />
-            <ColorLoopControls id={device.id} accessToken={accessToken} />
-          </View>
-        )}
-        {!!expanded && (
-          <View
-            style={{
-              borderBottomColor: 'black',
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
-        )}
-        {!!expanded && (
-          <View style={deviceStyle.advancedContainer}>
-            <DeviceVariable
-              reformattedVariables={device.reformattedVariables}
-              id={device.id}
-              accessToken={accessToken}
-            />
-            <DeviceFunction
-              functions={device.functions}
-              id={device.id}
-              accessToken={accessToken}
-            />
-            <View style={{paddingBottom: 10}}>
-              <ResetButton id={device.id} accessToken={accessToken} />
+          <>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <AnimationControls id={device.id} accessToken={accessToken} />
             </View>
-            <SafeModeButton id={device.id} accessToken={accessToken} />
-          </View>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <DeviceColorPicker id={device.id} accessToken={accessToken} />
+            </View>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <AnimationSpeed id={device.id} accessToken={accessToken} />
+            </View>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <AudioReactiveToggle id={device.id} accessToken={accessToken} />
+            </View>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <ColorLoopControls id={device.id} accessToken={accessToken} />
+            </View>
+          </>
         )}
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: StyleSheet.hairlineWidth,
-          }}
-        />
+        {!!expanded && (
+          <>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <DeviceVariable
+                reformattedVariables={device.reformattedVariables}
+                id={device.id}
+                accessToken={accessToken}
+              />
+            </View>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <DeviceFunction
+                functions={device.functions}
+                id={device.id}
+                accessToken={accessToken}
+              />
+            </View>
+            <DeviceSectionSeparator />
+            <View style={deviceStyle.sectionContainer}>
+              <View style={{paddingBottom: 10}}>
+                <ResetButton id={device.id} accessToken={accessToken} />
+              </View>
+              <SafeModeButton id={device.id} accessToken={accessToken} />
+            </View>
+          </>
+        )}
+        <DeviceSectionSeparator />
         <View>
           <TouchableOpacity
             style={deviceStyle.accordianToggleButton}

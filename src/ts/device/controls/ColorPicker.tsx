@@ -30,7 +30,7 @@ export function DeviceColorPicker({id, accessToken}: any) {
       <Text style={[style.titleText, deviceStyle.sectionTitle]}>{"Hue: " + hue?.toString()}</Text>
       <Slider
         style={style.slider}
-        // value={hue}
+        value={hue}
         minimumValue={0}
         maximumValue={255}
         minimumTrackTintColor="#FFFFFF"

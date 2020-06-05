@@ -15,8 +15,6 @@ export function AudioReactiveToggle({id, accessToken}: any) {
       flex: 1,
       flexDirection: 'row',
       alignContent: 'center',
-      paddingTop: 12,
-      paddingBottom: 12,
       paddingLeft: 4
     },
     switch: {
@@ -30,7 +28,7 @@ export function AudioReactiveToggle({id, accessToken}: any) {
 
   return (
     <View style={style.container}>
-      <Text style={[style.text, deviceStyle.sectionTitle]}>Toggle Audio Reactive</Text>
+      <Text style={[style.text, deviceStyle.sectionTitle]}>Audio Reactive Mode</Text>
       <Switch
         style={style.switch}
         trackColor={{false: '#767577', true: '#bfc0c0'}}

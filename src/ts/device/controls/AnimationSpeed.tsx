@@ -16,12 +16,10 @@ export function AnimationSpeed({id, accessToken}: any) {
       flex: 1,
       flexDirection: 'column',
       alignContent: 'center',
-      //   padding: 12,
     },
     toggleContainer: {
       flex: 1,
       flexDirection: 'row',
-      marginBottom: 12,
     },
     switch: {
       flex: 1,

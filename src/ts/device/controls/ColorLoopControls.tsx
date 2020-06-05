@@ -17,24 +17,22 @@ export function ColorLoopControls({id, accessToken}: any) {
       flex: 1,
       flexDirection: 'column',
       alignContent: 'center',
-      paddingTop: 12,
-      paddingBottom: 12,
       paddingLeft: 4
     },
     toggleContainer: {
       flex: 1,
       flexDirection: 'row',
-      marginBottom: 12,
     },
     switch: {
       flex: 1,
     },
     sliderContainer: {
       flex: 1,
+      paddingTop: 12
     },
     slider: {
       flex: 1,
-      padding: 8,
+      paddingTop: 8
     },
     text: {
       fontSize: 20,
@@ -45,7 +43,7 @@ export function ColorLoopControls({id, accessToken}: any) {
   return (
     <View style={style.container}>
       <View style={style.toggleContainer}>
-        <Text style={[style.text, deviceStyle.sectionTitle]}>Toggle Color Loop</Text>
+        <Text style={[style.text, deviceStyle.sectionTitle]}>Color Loop</Text>
         <Switch
           style={style.switch}
           trackColor={{false: '#767577', true: '#bfc0c0'}}
@@ -57,7 +55,7 @@ export function ColorLoopControls({id, accessToken}: any) {
         />
       </View>
       <View style={style.sliderContainer}>
-        <Text  style={[style.text, deviceStyle.sectionTitle]}>{`Loop Speed: ${colorLoopSpeed}`}</Text>
+        <Text  style={[style.text, deviceStyle.sectionTitle]}>{`Speed: ${colorLoopSpeed}`}</Text>
         <Slider
           style={style.slider}
           value={colorLoopSpeed}

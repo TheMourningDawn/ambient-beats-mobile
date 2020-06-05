@@ -19,7 +19,6 @@ export function AnimationControls({id, accessToken}: any) {
     container: {
       flex: 1,
       flexDirection: 'row-reverse',
-      margin: 20,
     },
     textContainer: {
       flex: 1,
