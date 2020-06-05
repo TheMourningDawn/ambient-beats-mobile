@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Devices} from '../device/Devices';
+import {DeviceList} from '../device/DeviceList';
 import {UserModel} from '../user/UserModel';
 import userStore from '../user/UserStore';
 
@@ -27,7 +27,7 @@ export default function Home({navigation}: any) {
   return (
     <>
       <View style={styleSheet.container}>
-        <Devices></Devices>
+        <DeviceList></DeviceList>
       </View>
     </>
   );

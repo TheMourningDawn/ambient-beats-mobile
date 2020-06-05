@@ -1,8 +1,9 @@
-import Slider from '@react-native-community/slider';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useParticleAPI } from '../../../ParticleAPI';
 import { FunctionResult, VariableResult } from '../DeviceModels';
+import Slider from '@react-native-community/slider';
+import { deviceStyle } from '../Device';
 
 export function DeviceColorPicker({id, accessToken}: any) {
   const [
@@ -16,22 +17,20 @@ export function DeviceColorPicker({id, accessToken}: any) {
     },
     titleText: {
       flex: 1,
-      fontSize: 22,
-      color: '#FFFFFF',
       marginLeft: 4,
     },
     slider: {
       flex: 1,
       padding: 8
-    }
+    },
   });
 
   return (
     <View style={style.container}>
-      <Text style={style.titleText}>{"Hue: " + hue?.toString()}</Text>
+      <Text style={[style.titleText, deviceStyle.sectionTitle]}>{"Hue: " + hue?.toString()}</Text>
       <Slider
         style={style.slider}
-        value={hue}
+        // value={hue}
         minimumValue={0}
         maximumValue={255}
         minimumTrackTintColor="#FFFFFF"
@@ -39,7 +38,7 @@ export function DeviceColorPicker({id, accessToken}: any) {
         onSlidingComplete={(hue: number) => {
           setHue(hue);
         }}/>
-      <Text style={style.titleText}>{"Brightness: " + brightness.toString()}</Text>
+      <Text style={[style.titleText, deviceStyle.sectionTitle]}>{"Brightness: " + brightness.toString()}</Text>
       <Slider
         style={style.slider}
         value={brightness}
@@ -50,7 +49,7 @@ export function DeviceColorPicker({id, accessToken}: any) {
         onSlidingComplete={(brightness: number) => {
           setBrightness(brightness);
         }}/>
-      <Text style={style.titleText}>{"Saturation: " + saturation.toString()}</Text>
+      <Text style={[style.titleText, deviceStyle.sectionTitle]}>{"Saturation: " + saturation.toString()}</Text>
       <Slider
         style={style.slider}
         value={saturation}

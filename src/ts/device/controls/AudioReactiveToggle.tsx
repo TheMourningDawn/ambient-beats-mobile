@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Switch, View, Text} from 'react-native';
 import {FunctionResult, VariableResult} from '../DeviceModels';
 import {useParticleAPI} from '../../../ParticleAPI';
+import { deviceStyle } from '../Device';
 
 export function AudioReactiveToggle({id, accessToken}: any) {
   const [
@@ -14,7 +15,9 @@ export function AudioReactiveToggle({id, accessToken}: any) {
       flex: 1,
       flexDirection: 'row',
       alignContent: 'center',
-      padding: 12,
+      paddingTop: 12,
+      paddingBottom: 12,
+      paddingLeft: 4
     },
     switch: {
       flex: 1,
@@ -27,7 +30,7 @@ export function AudioReactiveToggle({id, accessToken}: any) {
 
   return (
     <View style={style.container}>
-      <Text style={style.text}>Toggle Audio Reactive</Text>
+      <Text style={[style.text, deviceStyle.sectionTitle]}>Toggle Audio Reactive</Text>
       <Switch
         style={style.switch}
         trackColor={{false: '#767577', true: '#bfc0c0'}}
