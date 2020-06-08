@@ -40,14 +40,15 @@ export function AnimationSpeed({id, accessToken}: any) {
   return (
     <View style={style.container}>
       <View style={style.sliderContainer}>
-        <Text style={[style.text, deviceStyle.sectionTitle]}>{`Animation Speed: ${speed}`}</Text>
+        <Text style={[style.text, deviceStyle.sectionTitle]}>{`Animation Speed: ${100 - speed}%`}</Text>
         <Slider
           style={style.slider}
           value={speed}
           minimumValue={0}
-          maximumValue={150}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
+          maximumValue={100}
+          inverted={true}
+          minimumTrackTintColor="#000"
+          maximumTrackTintColor="#FFF"
           onSlidingComplete={(speed: number) => {
             setSpeed(speed);
           }}

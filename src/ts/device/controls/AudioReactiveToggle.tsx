@@ -61,12 +61,13 @@ export function AudioReactiveToggle({id, accessToken}: any) {
           style={[
             style.text,
             deviceStyle.sectionTitle,
-          ]}>{`Sensitivity: ${sensitivity}`}</Text>
+          ]}>{`Sensitivity: ${100 - Math.round(sensitivity / 2400 * 100)}%`}</Text>
         <Slider
           style={style.slider}
           value={sensitivity}
           minimumValue={500}
           maximumValue={2400}
+          inverted={true}
           minimumTrackTintColor="#FFFFFF"
           maximumTrackTintColor="#000000"
           onSlidingComplete={(speed: number) => {

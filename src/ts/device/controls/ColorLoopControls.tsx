@@ -55,14 +55,15 @@ export function ColorLoopControls({id, accessToken}: any) {
         />
       </View>
       <View style={style.sliderContainer}>
-        <Text  style={[style.text, deviceStyle.sectionTitle]}>{`Speed: ${colorLoopSpeed}`}</Text>
+        <Text  style={[style.text, deviceStyle.sectionTitle]}>{`Speed: ${100 - Math.round(colorLoopSpeed / 30 * 100)}%`}</Text>
         <Slider
           style={style.slider}
           value={colorLoopSpeed}
           minimumValue={1}
-          maximumValue={50}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
+          maximumValue={30}
+          inverted={true}
+          maximumTrackTintColor="#FFFFFF"
+          minimumTrackTintColor="#000000"
           onSlidingComplete={(speed: number) => {
             setColorLoopSpeed(speed);
           }}
