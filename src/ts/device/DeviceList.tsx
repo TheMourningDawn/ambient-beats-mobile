@@ -1,10 +1,13 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { Device } from './Device';
-import { useDeviceInfo } from './DeviceDataSource';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {useDeviceInfo} from './DeviceDataSource';
+import {DevicePowerToggle} from './controls/DevicePowerToggle';
+import { useNavigation } from '@react-navigation/native';
+import { Device } from './DeviceModels';
 
 export function DeviceList() {
-  const [{deviceInfo, isError, currentUser}] = useDeviceInfo();
+  const [{devices, isError, currentUser}] = useDeviceInfo();
+  const navigation = useNavigation();
 
   const style = StyleSheet.create({
     container: {
@@ -13,25 +16,12 @@ export function DeviceList() {
       flexDirection: 'column',
       justifyContent: 'space-between',
       backgroundColor: '#2d3142',
-      marginBottom: 12,
-      borderRadius: 10,
+      borderRadius: 6,
     },
     headerContainer: {
       flex: 1,
       flexDirection: 'row',
-      padding: 12,
-    },
-    controlsContainer: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      padding: 12,
-    },
-    advancedContainer: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      padding: 12,
+      padding:12
     },
     title: {
       flex: 1,
@@ -40,16 +30,36 @@ export function DeviceList() {
       fontSize: 26,
       color: '#FFFFFF',
     },
-    accordianToggleButton: {
-      alignSelf: 'center',
-    },
   });
+
+  const renderDevicePreview = (device: Device) => {
+    return <>
+      <TouchableOpacity
+        style={style.container}
+        onPress={() => {
+          navigation.navigate({name: 'Device', params: {
+            device: device,
+            accessToken: currentUser?.accessToken,
+          }});
+        }}>
+        <View style={style.headerContainer}>
+          <Text style={style.title}>{device?.name}</Text>
+          <View>
+            <DevicePowerToggle
+              id={device?.id}
+              accessToken={currentUser?.accessToken}
+            />
+          </View>
+        </View>
+      </TouchableOpacity>
+    </>
+  };
 
   return (
     <View style={{padding: 10}}>
       <FlatList
-        data={deviceInfo
-          .filter((item) => {
+        data={devices
+          .filter((item: Device) => {
             return !!item && item.connected;
           })
           .sort((a, b) => a.name.localeCompare(b.name))}
@@ -58,7 +68,14 @@ export function DeviceList() {
             <Text>Nothing to see here</Text>
           </View>
         }
-        renderItem={({item}) => <Device device={item} accessToken={currentUser?.accessToken}/>}
+        renderItem={({item}) => {
+          return renderDevicePreview(item)
+        }}
+        ItemSeparatorComponent={() => (
+          <>
+          <View style={{padding: 6}}></View>
+          </>
+        )}
       />
     </View>
   );

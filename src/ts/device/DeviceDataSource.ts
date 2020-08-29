@@ -1,11 +1,10 @@
 import {useEffect, useState} from 'react';
 import {UserModel} from '../user/UserModel';
 import userStore from '../user/UserStore';
-import {Device, DeviceInfo, Variable} from './DeviceModels';
+import {Device, Variable} from './DeviceModels';
 
 export const useDeviceInfo = () => {
   const [devices, setDevices] = useState<Array<Device>>([]);
-  const [deviceInfo, setDeviceInfo] = useState<Array<DeviceInfo>>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [currentUser, setCurrentUser] = useState<UserModel>();
@@ -33,7 +32,6 @@ export const useDeviceInfo = () => {
     };
 
     function getDevices(user: UserModel) {
-      setDeviceInfo([]);
       fetch(
         `https://api.particle.io/v1/devices?access_token=${user.accessToken}`,
         {
@@ -49,7 +47,14 @@ export const useDeviceInfo = () => {
         .then((json) => {
           const deviceResults: Device[] = json.map((device: any) => {
             let mappedDevice: Device = device as Device;
-            getDeviceInformation(user, mappedDevice.id);
+            let reformattedVariables: Variable[] = [];
+            for (var key in mappedDevice.variables) {
+              reformattedVariables.push({
+                name: key,
+                type: mappedDevice.variables[key],
+              });
+            }
+            mappedDevice.reformattedVariables = reformattedVariables;
             return mappedDevice;
           });
           setDevices(deviceResults);
@@ -59,35 +64,8 @@ export const useDeviceInfo = () => {
         });
     }
 
-    function getDeviceInformation(user: UserModel, deviceId: String) {
-      fetch(
-        `https://api.particle.io/v1/devices/${deviceId}?access_token=${user.accessToken}`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-          },
-        },
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((json) => {
-          let newDeviceInfo = json as DeviceInfo;
-          let reformattedVariables: Variable[] = [];
-          for (var key in newDeviceInfo.variables) {
-            reformattedVariables.push({
-              name: key,
-              type: newDeviceInfo.variables[key],
-            });
-          }
-          newDeviceInfo.reformattedVariables = reformattedVariables;
-          setDeviceInfo((previous) => previous.concat(newDeviceInfo));
-        });
-    }
-
     fetchData();
   }, []);
 
-  return [{devices, deviceInfo, isError, currentUser}];
+  return [{devices, isError, currentUser}];
 };

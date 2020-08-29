@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {AnimationControls} from './controls/AnimationControls';
 import {AnimationSpeed} from './controls/AnimationSpeed';
 import {AudioReactiveToggle} from './controls/AudioReactiveToggle';
@@ -9,22 +9,19 @@ import {DeviceColorPicker} from './controls/ColorPicker';
 import {DevicePowerToggle} from './controls/DevicePowerToggle';
 import {ResetButton} from './controls/ResetButton';
 import {SafeModeButton} from './controls/SafeModeButton';
+import {DeviceSectionSeparator} from './DeviceSectionSeparator';
 import {DeviceFunction} from './functions/DeviceFunction';
 import {DeviceVariable} from './variables/DeviceVariable';
-import {DeviceSectionSeparator} from './DeviceSectionSeparator';
 
 export const deviceStyle = StyleSheet.create({
   container: {
-    display: 'flex',
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
     backgroundColor: '#2d3142',
     marginBottom: 12,
-    borderRadius: 10,
+    borderRadius: 6,
+    margin: 12,
   },
   headerContainer: {
-    flex: 1,
     flexDirection: 'row',
     paddingRight: 12,
     paddingLeft: 12,
@@ -46,13 +43,10 @@ export const deviceStyle = StyleSheet.create({
     fontSize: 22,
     color: '#FFFFFF',
   },
-  accordianToggleButton: {
-    alignSelf: 'center',
-  },
 });
 
-export function Device({device, accessToken}: any) {
-  const [expanded, setExpanded] = useState<boolean>(false);
+export function Device({route}: any) {
+  const {device, accessToken} = route.params;
   const [isAnimatedDevice, setIsAnimatedDevice] = useState<boolean>(false);
 
   useEffect(() => {
@@ -65,22 +59,16 @@ export function Device({device, accessToken}: any) {
     }
   }
 
-  function toggleExpanded() {
-    setExpanded(!expanded);
-  }
-
   return (
     <>
       <View style={deviceStyle.container}>
         <View style={deviceStyle.headerContainer}>
           <Text style={deviceStyle.title}>{device?.name}</Text>
-          <View>
-            <DevicePowerToggle id={device?.id} accessToken={accessToken} />
-          </View>
+          <DevicePowerToggle id={device?.id} accessToken={accessToken} />
         </View>
+        <DeviceSectionSeparator />
         {isAnimatedDevice && (
           <>
-            <DeviceSectionSeparator />
             <View style={deviceStyle.sectionContainer}>
               <AnimationControls id={device.id} accessToken={accessToken} />
             </View>
@@ -89,60 +77,48 @@ export function Device({device, accessToken}: any) {
               <DeviceColorPicker id={device.id} accessToken={accessToken} />
             </View>
             <DeviceSectionSeparator />
-            <View style={deviceStyle.sectionContainer}>
-              <AnimationSpeed id={device.id} accessToken={accessToken} />
-            </View>
-            <DeviceSectionSeparator />
-            <View style={deviceStyle.sectionContainer}>
-              <AudioReactiveToggle id={device.id} accessToken={accessToken} />
-            </View>
-            <DeviceSectionSeparator />
-            <View style={deviceStyle.sectionContainer}>
-              <ColorLoopControls id={device.id} accessToken={accessToken} />
-            </View>
           </>
         )}
-        {!!expanded && (
-          <>
-            <DeviceSectionSeparator />
-            <View style={deviceStyle.sectionContainer}>
-              <DeviceVariable
-                reformattedVariables={device.reformattedVariables}
-                id={device.id}
-                accessToken={accessToken}
-              />
-            </View>
-            <DeviceSectionSeparator />
-            <View style={deviceStyle.sectionContainer}>
-              <DeviceFunction
-                functions={device.functions}
-                id={device.id}
-                accessToken={accessToken}
-              />
-            </View>
-            <DeviceSectionSeparator />
-            <View style={deviceStyle.sectionContainer}>
-              <View style={{paddingBottom: 10}}>
-                <ResetButton id={device.id} accessToken={accessToken} />
+        <ScrollView style={{flex: 0}}>
+          {isAnimatedDevice && (
+            <>
+              <View style={deviceStyle.sectionContainer}>
+                <AnimationSpeed id={device.id} accessToken={accessToken} />
               </View>
-              <SafeModeButton id={device.id} accessToken={accessToken} />
-            </View>
-          </>
-        )}
-        <DeviceSectionSeparator />
-        <View>
-          <TouchableOpacity
-            style={deviceStyle.accordianToggleButton}
-            onPress={() => {
-              toggleExpanded();
-            }}>
-            <Icon
-              name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-              size={30}
-              color={'#FFF'}
+              <DeviceSectionSeparator />
+              <View style={deviceStyle.sectionContainer}>
+                <AudioReactiveToggle id={device.id} accessToken={accessToken} />
+              </View>
+              <DeviceSectionSeparator />
+              <View style={deviceStyle.sectionContainer}>
+                <ColorLoopControls id={device.id} accessToken={accessToken} />
+              </View>
+              <DeviceSectionSeparator />
+            </>
+          )}
+          <View style={deviceStyle.sectionContainer}>
+            <DeviceVariable
+              reformattedVariables={device.reformattedVariables}
+              id={device.id}
+              accessToken={accessToken}
             />
-          </TouchableOpacity>
-        </View>
+          </View>
+          <DeviceSectionSeparator />
+          <View style={deviceStyle.sectionContainer}>
+            <DeviceFunction
+              functions={device.functions}
+              id={device.id}
+              accessToken={accessToken}
+            />
+          </View>
+          <DeviceSectionSeparator />
+          <View style={[deviceStyle.sectionContainer, {paddingBottom: 12}]}>
+            <View style={{paddingBottom: 10}}>
+              <ResetButton id={device.id} accessToken={accessToken} />
+            </View>
+            <SafeModeButton id={device.id} accessToken={accessToken} />
+          </View>
+        </ScrollView>
       </View>
     </>
   );

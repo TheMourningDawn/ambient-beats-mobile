@@ -34,7 +34,7 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: '#4F5D75',
-      borderRadius: 10,
+      borderRadius: 6,
     },
     picker: {
       flex: 3,
@@ -53,7 +53,7 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
       width: 90,
       height: 25,
       backgroundColor: '#EF8354',
-      borderRadius: 10,
+      borderRadius: 6,
       alignContent: 'center',
       justifyContent: 'center',
     },
@@ -69,7 +69,7 @@ export function DeviceVariable({id, reformattedVariables, accessToken}: any) {
           selectedValue={selectedValue}
           style={style.picker}
           onValueChange={(itemValue) => setSelectedValue(itemValue.toString())}>
-          {reformattedVariables.map((item: Variable, index: string) => {
+          {!!reformattedVariables && reformattedVariables.map((item: Variable, index: string) => {
             return (
               <Picker.Item label={item.name} value={item.name} key={index} />
             );

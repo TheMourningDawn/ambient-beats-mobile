@@ -1,10 +1,23 @@
-export interface DeviceInfo {
+export interface Device {
+  cellular: boolean;
+  connected: boolean;
+  current_build_target: string;
+  default_build_target: string;
   id: string;
+  last_app: string;
+  last_handshake_at: string;
+  last_heard: string;
+  last_ip_address: string;
   name: string;
+  notes: string;
+  platform_id: Number;
+  product_id: Number;
+  serial_number: string;
+  status: string;
+  system_firmware_version: string;
   variables: {[key: number]: string};
   reformattedVariables: Variable[];
   functions: Array<any>;
-  connected: boolean;
 }
 
 export interface Variable {
@@ -27,24 +40,4 @@ export interface FunctionResult {
   id: string;
   last_app: string;
   return_value: number;
-}
-
-export interface Device {
-  cellular: boolean;
-  connected: boolean;
-  current_build_target: string;
-  default_build_target: string;
-  id: string;
-  last_app: string;
-  last_handshake_at: string;
-  last_heard: string;
-  last_ip_address: string;
-  name: string;
-  notes: string;
-  platform_id: Number;
-  product_id: Number;
-  serial_number: string;
-  status: string;
-  system_firmware_version: string;
-  deviceInfo: DeviceInfo;
 }
