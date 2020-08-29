@@ -32,7 +32,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       flex: 1,
       flexDirection: 'row',
       backgroundColor: '#4F5D75',
-      borderRadius: 10,
+      borderRadius: 6,
     },
     controlsContainer: {
       flex: 3,
@@ -69,7 +69,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
     },
     textInput: {
       backgroundColor: '#BFC0C0',
-      borderRadius: 10,
+      borderRadius: 6,
       width: '100%',
     },
     button: {
@@ -79,7 +79,7 @@ export function DeviceFunction({id, functions, accessToken}: any) {
       flexBasis: 'auto',
       width: 90,
       backgroundColor: '#EF8354',
-      borderRadius: 10,
+      borderRadius: 6,
       alignContent: 'center',
       justifyContent: 'center',
       alignSelf: 'flex-end',

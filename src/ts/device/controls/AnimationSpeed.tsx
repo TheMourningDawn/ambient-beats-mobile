@@ -13,26 +13,16 @@ export function AnimationSpeed({id, accessToken}: any) {
 
   const style = StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: 'column',
       alignContent: 'center',
     },
-    toggleContainer: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-    switch: {
-      flex: 1,
-    },
     sliderContainer: {
-      flex: 1,
+      // height: 50,
     },
     slider: {
-      flex: 1,
       padding: 8,
     },
     text: {
-      flex: 1,
       marginLeft: 4,
     },
   });

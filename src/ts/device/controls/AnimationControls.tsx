@@ -17,22 +17,21 @@ export function AnimationControls({id, accessToken}: any) {
 
   const style = StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: 'row-reverse',
+      height: 50,
     },
     textContainer: {
       flex: 1,
     },
     animationIndexText: {
-      flex: 1,
-      fontSize: 30,
+      fontSize: 36,
       color: '#FFF',
       alignSelf: 'center',
     },
     button: {
       flex: 3,
       backgroundColor: '#EF8354',
-      borderRadius: 10,
+      borderRadius: 6,
       alignContent: 'center',
       justifyContent: 'center',
     },

@@ -22,7 +22,7 @@ export function SafeModeButton({id, accessToken}: any) {
     button: {
       flex: 1,
       backgroundColor: '#EF8354',
-      borderRadius: 10,
+      borderRadius: 6,
       height: 50,
       alignContent: 'center',
       justifyContent: 'center',
